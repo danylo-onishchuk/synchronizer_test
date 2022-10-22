@@ -1,10 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { Interval } from '@nestjs/schedule';
 import { HttpService } from '@nestjs/axios';
+import { CurrencyService } from 'src/currency/currency.service';
 
 @Injectable()
 export class FetchTaskService {
-  constructor(private readonly httpService: HttpService) {}
+  constructor(
+    private readonly httpService: HttpService,
+    private readonly currencyService: CurrencyService,
+  ) {}  
 
   @Interval(1000)
   async handleInterval() {
@@ -17,6 +21,6 @@ export class FetchTaskService {
       price: Number(data.price),
     };
 
-    console.log(currency);
+    await this.currencyService.create(currency);
   }
 }

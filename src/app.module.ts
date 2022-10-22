@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ScheduleModule } from '@nestjs/schedule';
-import { FetchTaskModule } from './fetchTask/fetchTask.module';
 import { ConfigModule } from '@nestjs/config';
+import { CurrencyModule } from './currency/currency.module';
+import { Currency } from './currency/models/currency.entity';
 
 @Module({
   imports: [
@@ -14,11 +15,11 @@ import { ConfigModule } from '@nestjs/config';
       username: process.env.DATABASE_USERNAME,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
-      entities: [],
+      entities: [Currency],
       synchronize: true,
     }),
     ScheduleModule.forRoot(),
-    FetchTaskModule,
+    CurrencyModule,
   ],
 })
 export class AppModule {}
