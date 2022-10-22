@@ -3,6 +3,8 @@ import { Interval } from '@nestjs/schedule';
 import { HttpService } from '@nestjs/axios';
 import { CurrencyService } from 'src/currency/currency.service';
 
+const oneMinuteInterval = 60000;
+
 @Injectable()
 export class FetchTaskService {
   constructor(
@@ -10,7 +12,7 @@ export class FetchTaskService {
     private readonly currencyService: CurrencyService,
   ) {}  
 
-  @Interval(1000)
+  @Interval(oneMinuteInterval)
   async handleInterval() {
     const { data } = await this.httpService.axiosRef.get(
       `${process.env.PRICE_INFO_API}${process.env.CURRENCY_NAME}`, 
